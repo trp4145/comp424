@@ -26,9 +26,9 @@ public class StudentPlayer extends TablutPlayer {
         // For example, maybe you'll need to load some pre-processed best opening
         // strategies...
         MyTools.getSomething();
-
+        MonteCarloTreeSearch tree = new MonteCarloTreeSearch();
+        Move myMove = tree.findNextMove(boardState);
         // Is random the best you can do?
-        Move myMove = boardState.getRandomMove();
 
         // Return your move to be processed by the server.
         return myMove;

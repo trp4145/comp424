@@ -164,3 +164,43 @@
 169,RandomPlayer,xxxxxxxxx,0,RandomPlayer,15,game00169.log,
 170,xxxxxxxxx,RandomPlayer,0,xxxxxxxxx,15,game00170.log,
 171,RandomPlayer,xxxxxxxxx,0,RandomPlayer,15,game00171.log,
+1,RandomPlayer,GreedyPlayer,1,GreedyPlayer,5,game00001.log,
+2,GreedyPlayer,xxxxxxxxx,0,GreedyPlayer,4,game00002.log,
+3,GreedyPlayer,xxxxxxxxx,0,GreedyPlayer,15,game00003.log,
+4,xxxxxxxxx,xxxxxxxxx,0,xxxxxxxxx,40,game00004.log,
+5,xxxxxxxxx,xxxxxxxxx,GAMEOVER DRAW,NOBODY,50,game00005.log,
+6,xxxxxxxxx,xxxxxxxxx,GAMEOVER DRAW,NOBODY,50,game00006.log,
+7,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00007.log,TIMEOUT
+8,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00008.log,TIMEOUT
+9,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00009.log,TIMEOUT
+10,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,7,game00010.log,
+11,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00011.log,TIMEOUT
+12,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,2,game00012.log,TIMEOUT
+14,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,16,game00014.log,
+15,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,11,game00015.log,
+16,xxxxxxxxx,GreedyPlayer,GAMEOVER USER CANCEL UNDECIDED,NOBODY,8,game00016.log,USER CANCEL
+17,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,8,game00017.log,
+18,GreedyPlayer,xxxxxxxxx,0,GreedyPlayer,11,game00018.log,
+19,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,5,game00019.log,
+20,GreedyPlayer,xxxxxxxxx,0,GreedyPlayer,18,game00020.log,
+21,RandomPlayer,xxxxxxxxx,GAMEOVER USER CANCEL UNDECIDED,NOBODY,34,game00021.log,USER CANCEL
+22,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,1,game00022.log,TIMEOUT
+25,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,1,game00025.log,TIMEOUT
+27,xxxxxxxxx,GreedyPlayer,GAMEOVER USER CANCEL UNDECIDED,NOBODY,0,game00027.log,USER CANCEL
+28,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,8,game00028.log,
+30,xxxxxxxxx,RandomPlayer,1,RandomPlayer,7,game00030.log,TIMEOUT
+32,xxxxxxxxx,RandomPlayer,GAMEOVER USER CANCEL UNDECIDED,NOBODY,15,game00032.log,USER CANCEL
+34,xxxxxxxxx,RandomPlayer,GAMEOVER DRAW,NOBODY,50,game00034.log,
+38,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00038.log,TIMEOUT
+40,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,1,game00040.log,TIMEOUT
+41,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00041.log,TIMEOUT
+42,xxxxxxxxx,RandomPlayer,GAMEOVER USER CANCEL UNDECIDED,NOBODY,31,game00042.log,USER CANCEL
+43,xxxxxxxxx,GreedyPlayer,GAMEOVER USER CANCEL UNDECIDED,NOBODY,41,game00043.log,USER CANCEL
+44,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,9,game00044.log,
+46,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,8,game00046.log,
+48,xxxxxxxxx,GreedyPlayer,0,xxxxxxxxx,5,game00048.log,
+50,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,0,game00050.log,TIMEOUT
+51,GreedyPlayer,xxxxxxxxx,0,GreedyPlayer,7,game00051.log,
+53,xxxxxxxxx,RandomPlayer,GAMEOVER USER CANCEL UNDECIDED,NOBODY,23,game00053.log,USER CANCEL
+54,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,5,game00054.log,
+55,xxxxxxxxx,GreedyPlayer,1,GreedyPlayer,9,game00055.log,
