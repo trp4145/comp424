@@ -27,6 +27,8 @@ public class StudentPlayer extends TablutPlayer {
         // strategies...
         MyTools.getSomething();
         MonteCarloTreeSearch tree = new MonteCarloTreeSearch();
+        // countEdge = Fitness.countNumberOfEdgePieces(boardState);
+        //int squeeze = Fitness.potentialSqueeze(boardState);
         Move myMove = tree.findNextMove(boardState);
         // Is random the best you can do?
 
