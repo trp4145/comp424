@@ -65,8 +65,12 @@ public class MonteCarloTreeSearch {
 
     private Node selectPromisingNode(Node rootNode){
         Node node = rootNode;
-        while(node.getChildren().size() != 0){
+        while(node.getChildren().size() != 0 && rootNode.getState().getTurnPlayer() == player){
             node = UCT.findBestNodeWithUCT(node);
+        }
+
+        while(node.getChildren().size() != 0 && rootNode.getState().getTurnPlayer() == opponent){
+            node = UCT.findWorstNodeWithUCT(node);
         }
         return node;
     }

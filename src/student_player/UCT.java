@@ -27,4 +27,16 @@ public class UCT {
             }
         });
     }
+
+    public static Node findWorstNodeWithUCT(Node node){
+        final int parentVisit = node.getVisitCount();
+        return Collections.min(node.getChildren(), new Comparator<Node>() {
+            @Override
+            public int compare(Node o1, Node o2) {
+                double u1 = uctValue(parentVisit, o1.getFitness(), o1.getVisitCount());
+                double u2 = uctValue(parentVisit, o2.getFitness(), o2.getVisitCount());
+                return Double.compare(u1,u2);
+            }
+        });
+    }
 }
