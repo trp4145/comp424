@@ -1,10 +1,8 @@
 package student_player;
 
 import boardgame.Move;
-import boardgame.Player;
 import coordinates.Coord;
 import coordinates.Coordinates;
-import tablut.TablutBoard;
 import tablut.TablutBoardState;
 import tablut.TablutMove;
 import boardgame.Board;
@@ -66,11 +64,11 @@ public class MonteCarloTreeSearch {
     private Node selectPromisingNode(Node rootNode){
         Node node = rootNode;
         while(node.getChildren().size() != 0 && rootNode.getState().getTurnPlayer() == player){
-            node = UCT.findBestNodeWithUCT(node);
-        }
-
-        while(node.getChildren().size() != 0 && rootNode.getState().getTurnPlayer() == opponent){
-            node = UCT.findWorstNodeWithUCT(node);
+            if(node.getState().getTurnPlayer() == player) {
+                node = UCT.findBestNodeWithUCT(node);
+            }else{
+                node = UCT.findEnemyNodeWithUCT(node);
+            }
         }
         return node;
     }
@@ -124,7 +122,7 @@ public class MonteCarloTreeSearch {
         }else if(boardStatus == this.player){
             return 1;
         }else{
-            return 0;
+            return 1/2;
         }
         //System.out.println("Dept: " + dept);
         //return boardStatus;
