@@ -48,30 +48,22 @@ public class MonteCarloTreeSearch {
             if(promisingNode.getChildren().size() > 0){
                 nodeToExplore = promisingNode.getRandomChildNode();
             }
-            int playoutResult = simulateRandomPlayout(nodeToExplore);
+            double playoutResult = simulateRandomPlayout(nodeToExplore);
             backPropogation(nodeToExplore, rootNode.getState().getTurnPlayer(), playoutResult);
         }
         Node winnerNode = rootNode.getChildWithMaxScore();
-        System.out.println("UCT: " + UCT.uctValue(rootNode.getVisitCount(),winnerNode.getFitness(),winnerNode.getVisitCount()));
+        //System.out.println("UCT: " + UCT.uctValue(rootNode.getVisitCount(),winnerNode.getFitness(),winnerNode.getVisitCount()));
         int fit = 0;
-        for(Node c: rootNode.getChildren()){
-            for(Node d: c.getChildren()) {
-                fit += d.getFitness();
-            }
-        }
         tree.setRoot(winnerNode);
         return winnerNode.getMove();
     }
 
     private Node selectPromisingNode(Node rootNode){
         Node node = rootNode;
-        while(node.getChildren().size() != 0 && rootNode.getState().getTurnPlayer() == player){
-            node = UCT.findBestNodeWithUCT(node);
+        while(node.getChildren().size() != 0){
+            node = UCT.findBestNodeWithUCT(node, node.getState().getTurnPlayer() == player);
         }
 
-        while(node.getChildren().size() != 0 && rootNode.getState().getTurnPlayer() == opponent){
-            node = UCT.findWorstNodeWithUCT(node);
-        }
         return node;
     }
 
@@ -93,18 +85,19 @@ public class MonteCarloTreeSearch {
         Node tempNode = nodeToExplore;
         while(tempNode != null){
             tempNode.incrementVisit();
-            tempNode.incrementFitness(fitness);
+            tempNode.incrementFitness(fitness,true);
+            tempNode.incrementFitness(1-fitness, false);
             tempNode = tempNode.getParent();
         }
     }
 
-    private int simulateRandomPlayout(Node node){
+    private double simulateRandomPlayout(Node node){
 
         Node tempNode = new Node((TablutBoardState) node.getState().clone());
         int boardStatus = tempNode.getState().getWinner();
         if(boardStatus == tempNode.getState().getOpponent()){
             if(tempNode.getParent() != null) {
-                tempNode.getParent().setFitness(Integer.MIN_VALUE);
+                tempNode.getParent().incrementFitness(Integer.MIN_VALUE,true);
             }
         }
         int dept = 0;
@@ -124,7 +117,7 @@ public class MonteCarloTreeSearch {
         }else if(boardStatus == this.player){
             return 1;
         }else{
-            return 0;
+            return 0.5;
         }
         //System.out.println("Dept: " + dept);
         //return boardStatus;

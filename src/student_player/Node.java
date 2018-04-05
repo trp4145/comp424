@@ -14,18 +14,19 @@ public class Node {
     private TablutMove move;
 
     private int visitCount;
-    private double fitness;
+    private double[] fitness;
+
 
     public Node(TablutBoardState state) {
         this.state = state;
         this.visitCount = 0;
-        this.fitness = 0;
+        this.fitness = new double[2];
         this.children = new ArrayList<>();
         this.parent = null;
         this.move = null;
     }
 
-    public Node(TablutBoardState state, Node parent, ArrayList<Node> children, TablutMove move, int visitCount, double fitness) {
+    public Node(TablutBoardState state, Node parent, ArrayList<Node> children, TablutMove move, int visitCount, double[] fitness) {
         this.state = state;
         this.parent = parent;
         this.children = children;
@@ -39,8 +40,12 @@ public class Node {
         visitCount++;
     }
 
-    public void incrementFitness(double fitness){
-        this.fitness += fitness;
+    public void incrementFitness(double fitness,boolean isRootPlayer){
+        if(isRootPlayer) {
+            this.fitness[0] += fitness;
+        }else{
+            this.fitness[1] += fitness;
+        }
     }
 
     public TablutMove getMove() {
@@ -80,11 +85,11 @@ public class Node {
 
     }
 
-    public double getFitness() {
+    public double[] getFitness() {
         return fitness;
     }
 
-    public void setFitness(double fitness) {
+    public void setFitness(double[] fitness) {
         this.fitness = fitness;
     }
 

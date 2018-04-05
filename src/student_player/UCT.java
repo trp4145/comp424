@@ -16,19 +16,21 @@ public class UCT {
         return ((double) fitness/ (double) nodeVisit) + 1.41 * Math.sqrt(Math.log(totalVisit)/ (double) nodeVisit) + random.nextDouble()*epsilon;
     }
 
-    public static Node findBestNodeWithUCT(Node node){
+    public static Node findBestNodeWithUCT(Node node, final boolean isPlayer){
         final int parentVisit = node.getVisitCount();
         return Collections.max(node.getChildren(), new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
-                double u1 = uctValue(parentVisit, o1.getFitness(), o1.getVisitCount());
-                double u2 = uctValue(parentVisit, o2.getFitness(), o2.getVisitCount());
+                double childFitness1 = isPlayer ? o1.getFitness()[0]: o1.getFitness()[1];
+                double childFitness2 = isPlayer ? o2.getFitness()[0]: o2.getFitness()[1];
+                double u1 = uctValue(parentVisit, childFitness1, o1.getVisitCount());
+                double u2 = uctValue(parentVisit, childFitness2, o2.getVisitCount());
                 return Double.compare(u1,u2);
             }
         });
     }
 
-    public static Node findWorstNodeWithUCT(Node node){
+    /*public static Node findWorstNodeWithUCT(Node node){
         final int parentVisit = node.getVisitCount();
         return Collections.min(node.getChildren(), new Comparator<Node>() {
             @Override
@@ -38,5 +40,5 @@ public class UCT {
                 return Double.compare(u1,u2);
             }
         });
-    }
+    }*/
 }
