@@ -1,4 +1,4 @@
-package student_player;
+package paranoid;
 
 import boardgame.Move;
 import tablut.TablutBoardState;
@@ -13,7 +13,7 @@ public class StudentPlayer extends TablutPlayer {
      * associate you with your agent. The constructor should do nothing else.
      */
     public StudentPlayer() {
-        super("MAXN");
+        super("Paranoid");
     }
 
     /**
