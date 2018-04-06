@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.Random;
 
 public class MonteCarloTreeSearch {
-    static final double TURN_TIME = 1.8;
+    static final double TURN_TIME = 1.7;
     int opponent;
     int player;
     int level;
     private Random rand = new Random(1848);
     int count = 0;
+    long totalTime, totalExpand, totalPlay, totalPromis, totalBack, totalWinChild, totalTimeKing, getWinChildStart, getGetWinChildEnd, kingStart, startTime,promisEnd, promisStart, expandEnd, expandStart, playEnd, playStart,backStart,backEnd,getMoveStart,getMoveEnd,childStart,childEnd,simulaStart,randomMoveStart,randomMoveEnd,moveSize;
+
     HashSet<String> previousPositions;
     public MonteCarloTreeSearch() {
     }
@@ -28,37 +30,65 @@ public class MonteCarloTreeSearch {
     public TablutMove findNextMove(TablutBoardState state){
         Tree tree = new Tree(state);
 
-        long start = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         this.level++;
         this.player = state.getTurnPlayer();
         this.opponent = state.getOpponent();
-        long end = (long)TURN_TIME * 1000;
+        long end = (long)(TURN_TIME * 1000);
+        int numTestDone = 0;
 
         Node rootNode = tree.getRoot();
 
-        while(System.currentTimeMillis() < start + end){
+        while(System.currentTimeMillis() < startTime + end){
+            long simultionStartTime = System.currentTimeMillis();
+
+            promisStart = System.currentTimeMillis();
             Node promisingNode = selectPromisingNode(rootNode);
+            promisEnd = System.currentTimeMillis();
+            if (outOfTime())break;
+
             if(promisingNode.getChildren().size() == 0){
+                expandStart = System.currentTimeMillis();
                 expandNode(promisingNode);
+                expandEnd = System.currentTimeMillis();
+                totalExpand += expandEnd-expandStart;
+                if (outOfTime())break;
+
             }
 
             Node nodeToExplore = promisingNode;
             if(promisingNode.getChildren().size() > 0){
                 nodeToExplore = promisingNode.getRandomChildNode();
             }
+            playStart = System.currentTimeMillis();
             int playoutResult = simulateRandomPlayout(nodeToExplore);
+            playEnd = System.currentTimeMillis();
+            if (outOfTime())break;
+
+            backStart = System.currentTimeMillis();
             backPropogation(nodeToExplore, rootNode.getState().getTurnPlayer(), playoutResult);
+            backEnd = System.currentTimeMillis();
+            if (outOfTime())break;
+
+            long simultationEndTime = System.currentTimeMillis();
+            numTestDone++;
+
+            totalBack += backEnd-backStart;
+            totalPlay += playEnd-playStart;
+            totalPromis += promisEnd - promisStart;
+            totalTime += simultationEndTime - simultionStartTime;
         }
+        getWinChildStart = System.currentTimeMillis();
         Node winnerNode = rootNode.getChildWithMaxScore();
-        System.out.println("UCT: " + UCT.uctValue(rootNode.getVisitCount(),winnerNode.getFitness(),winnerNode.getVisitCount()));
+        getGetWinChildEnd = System.currentTimeMillis();
+        totalWinChild = getGetWinChildEnd-getWinChildStart;
         int fit = 0;
-        for(Node c: rootNode.getChildren()){
-            for(Node d: c.getChildren()) {
-                fit += d.getFitness();
-            }
-        }
+
         tree.setRoot(winnerNode);
         return winnerNode.getMove();
+    }
+    private  boolean outOfTime(){
+        return System.currentTimeMillis()-startTime > TURN_TIME*1000;
     }
 
     private Node selectPromisingNode(Node rootNode){
@@ -99,14 +129,28 @@ public class MonteCarloTreeSearch {
     private int simulateRandomPlayout(Node node){
 
         Node tempNode = new Node((TablutBoardState) node.getState().clone());
+        tempNode.setParent(node.getParent());
         int boardStatus = tempNode.getState().getWinner();
-        if(boardStatus == tempNode.getState().getOpponent()){
-            if(tempNode.getParent() != null) {
-                tempNode.getParent().setFitness(Integer.MIN_VALUE);
+        if(tempNode.getState().getKingPosition() != null) {
+            Coord kingPosition = tempNode.getState().getKingPosition();
+            for (TablutMove move : tempNode.getState().getLegalMovesForPosition(kingPosition)) {
+                TablutBoardState cloneState = (TablutBoardState) tempNode.getState().clone();
+                cloneState.processMove(move);
+                if (cloneState.getWinner() == opponent) {
+                    return Integer.MIN_VALUE;
+                } else if (cloneState.getWinner() == player) {
+                    return Integer.MAX_VALUE;
+                }
+            }
+        }else{
+            if(player == TablutBoardState.SWEDE) {
+                return Integer.MIN_VALUE;
+            }else{
+                return Integer.MAX_VALUE;
             }
         }
         int dept = 0;
-        while(boardStatus == Board.NOBODY ){
+        while(boardStatus == Board.NOBODY && !outOfTime()){
             TablutMove randomMove = null;
 
                 randomMove = (TablutMove) tempNode.getState().getRandomMove();

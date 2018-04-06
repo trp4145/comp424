@@ -15,7 +15,7 @@ public class Node {
 
     private int visitCount;
     private double[] fitness;
-
+    int kingDistance;
 
     public Node(TablutBoardState state) {
         this.state = state;
@@ -24,6 +24,7 @@ public class Node {
         this.children = new ArrayList<>();
         this.parent = null;
         this.move = null;
+        kingDistance = Integer.MIN_VALUE;
     }
 
     public Node(TablutBoardState state, Node parent, ArrayList<Node> children, TablutMove move, int visitCount, double[] fitness) {
@@ -74,14 +75,38 @@ public class Node {
         return this.children.get(selectRandom);
     }
 
-    public Node getChildWithMaxScore() {
-        return Collections.max(this.children, new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
+    public int getKingDistance() {
+        return kingDistance;
+    }
 
-                return Integer.compare(o1.visitCount,o2.visitCount);
+    public void setKingDistance(int kingDistance) {
+        this.kingDistance = kingDistance;
+    }
+
+    public Node getChildWithMaxScore() {
+        ArrayList<Node> candidates = new ArrayList<>();
+        double bestfitness = Integer.MIN_VALUE;
+        for(Node child: children){
+            if(child.getFitness()[0]> bestfitness){
+                bestfitness = child.getFitness()[0];
+                candidates = new ArrayList<>();
+                candidates.add(child);
+            }else if (child.getFitness()[0] == bestfitness){
+                candidates.add(child);
             }
-        });
+        }
+        if(candidates.size() >= 1){
+            return Collections.max(candidates, new Comparator<Node>() {
+                @Override
+                public int compare(Node o1, Node o2) {
+
+                    return Double.compare(o1.visitCount,o2.visitCount);
+                }
+            });
+        }else{
+            return candidates.get(0);
+        }
+
 
     }
 

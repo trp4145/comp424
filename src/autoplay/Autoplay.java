@@ -40,13 +40,21 @@ public class Autoplay {
 
             Process server = server_pb.start();
 
-            ProcessBuilder client1_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
+            ProcessBuilder client1_pb = new ProcessBuilder("java","-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005", "-cp", "bin", "-Xms520m", "-Xmx520m",
                     "boardgame.Client", "student_player.StudentPlayer");
             client1_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
             ProcessBuilder client2_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
                     "boardgame.Client", "tablut.GreedyTablutPlayer");
             client2_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+
+            ProcessBuilder client3_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
+                    "boardgame.Client", "aren.StudentPlayerC");
+            client3_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+
+            ProcessBuilder client4_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
+                    "boardgame.Client", "paranoid.StudentPlayer");
+            client4_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
             for (int i = 0; i < n_games; i++) {
                 System.out.println("Game " + i);
@@ -57,7 +65,7 @@ public class Autoplay {
                     Thread.currentThread().interrupt();
                 }
 
-                Process client1 = ((i % 2 == 0) ? client1_pb.start() : client2_pb.start());
+                Process client1 = ((i % 2 == 0) ? client1_pb.start() : client3_pb.start());
 
                 try {
                     Thread.sleep(500);
@@ -65,7 +73,7 @@ public class Autoplay {
                     Thread.currentThread().interrupt();
                 }
 
-                Process client2 = ((i % 2 == 0) ? client2_pb.start() : client1_pb.start());
+                Process client2 = ((i % 2 == 0) ? client3_pb.start() : client1_pb.start());
 
                 try {
                     client1.waitFor();
@@ -80,6 +88,101 @@ public class Autoplay {
                 }
             }
 
+            /*for (int i = 0; i < n_games; i++) {
+                System.out.println("Game " + i);
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                Process client1 = ((i % 2 == 0) ? client1_pb.start() : client3_pb.start());
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                Process client2 = ((i % 2 == 0) ? client3_pb.start() : client1_pb.start());
+
+                try {
+                    client1.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    client2.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for (int i = 0; i < n_games; i++) {
+                System.out.println("Game " + i);
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                Process client1 = ((i % 2 == 0) ? client1_pb.start() : client4_pb.start());
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                Process client2 = ((i % 2 == 0) ? client4_pb.start() : client1_pb.start());
+
+                try {
+                    client1.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    client2.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for (int i = 0; i < n_games; i++) {
+                System.out.println("Game " + i);
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                Process client1 = ((i % 2 == 0) ? client3_pb.start() : client4_pb.start());
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                Process client2 = ((i % 2 == 0) ? client4_pb.start() : client3_pb.start());
+
+                try {
+                    client1.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    client2.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }*/
             server.destroy();
 
         } catch (IOException e) {

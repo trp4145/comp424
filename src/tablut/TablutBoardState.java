@@ -225,10 +225,12 @@ public class TablutBoardState extends BoardState {
      * desirable to select a subset of moves from specific positions.
      */
     public ArrayList<TablutMove> getAllLegalMoves() {
+        long startTime = System.currentTimeMillis();
         ArrayList<TablutMove> allMoves = new ArrayList<>();
         for (Coord pos : getPlayerCoordSet()) {
             allMoves.addAll(getLegalMovesForPosition(pos));
         }
+
         return allMoves;
     }
 

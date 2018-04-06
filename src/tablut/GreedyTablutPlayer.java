@@ -30,7 +30,7 @@ public class GreedyTablutPlayer extends TablutPlayer {
         int opponent = bs.getOpponent();
         int minNumberOfOpponentPieces = bs.getNumberPlayerPieces(opponent);
         boolean moveCaptures = false;
-
+        TablutBoardState clone =(TablutBoardState) bs.clone();
         // Iterate over move options and evaluate them.
         for (TablutMove move : options) {
             // To evaluate a move, clone the boardState so that we can do modifications on
@@ -92,6 +92,7 @@ public class GreedyTablutPlayer extends TablutPlayer {
                 }
             }
         }
+
         return bestMove;
     }
 
